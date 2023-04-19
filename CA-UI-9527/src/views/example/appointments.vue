@@ -1,0 +1,524 @@
+<template>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-input v-model="listQuery.roomName" placeholder="会议室名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-select v-model="listQuery.appointmentStatus" placeholder="预约状态" clearable class="filter-item" style="width: 130px">
+        <el-option v-for="item in appointmentStatus" :key="item.status" :label="item.msg" :value="item.status" />
+      </el-select>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        新增
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+        导出
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-refresh" @click="handleRemoveFilters">
+        清除过滤条件
+      </el-button>
+      <!--      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
+        reviewer
+      </el-checkbox>-->
+    </div>
+
+    <el-table
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%;"
+      @sort-change="sortChange"
+    >
+      <el-table-column label="预约编号" prop="id" sortable="custom" align="center" width="120" /><!--:class-name="getSortClass('id')"-->
+      <el-table-column label="预约用户" prop="appointmentUser.username" align="center" width="180" />
+      <el-table-column label="会议主题" prop="conferenceSubject" align="center" width="180" />
+      <el-table-column label="参会人数" prop="participationNums" align="center" width="180" />
+      <el-table-column label="会议室名称" prop="appointmentRoom.roomName" align="center" width="180" />
+      <el-table-column label="会议室类型" prop="appointmentRoom.roomType.roomTypeName" align="center" width="180" />
+      <el-table-column label="会议室面积" prop="appointmentRoom.roomType.roomArea" align="center" width="120" />
+      <el-table-column label="清洁状态" prop="cleanStatus" align="center" width="80">
+        <template slot-scope="{row}">
+          <span :style="classByValue(row.appointmentRoom.cleanStatus)">{{ row.appointmentRoom.cleanStatus == 1 ? '整洁' : '待清洁' }}</span>
+        </template>
+      </el-table-column>
+      <!--      <el-table-column label="使用状态" prop="status" align="center" width="80">
+        <template slot-scope="{row}">
+          <span :style="classByValue(row.appointmentRoom.status)">{{ row.appointmentRoom.status == 1 ? '启用' : '禁用' }}</span>
+        </template>
+      </el-table-column>-->
+      <el-table-column label="预约状态" prop="appointmentStatus" align="center" width="100">
+        <template slot-scope="{row}">
+          <span :style="classByAppointmentStatus(row.appointmentStatus)">{{ parseAppointmentStatus(row.appointmentStatus) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="起始时间" width="230px" prop="appointmentStartTime" align="center" :formatter="formatDate" />
+      <el-table-column label="结束时间" width="180px" align="center" prop="appointmentEndTime" :formatter="formatDate" />
+      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="{row,$index}">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+            编辑
+          </el-button>
+          <!--          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
+            Publish
+          </el-button>
+          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
+            Draft
+          </el-button>-->
+          <el-popconfirm
+            title="确定删除该条预约信息？"
+            @onConfirm="handleDelete(row,$index)"
+          >
+            <el-button v-if="row.status!='deleted'" slot="reference" size="mini" type="danger"><!-- @click="handleDelete(row,$index)"-->
+              删除
+            </el-button>
+          </el-popconfirm>
+          <!--          <el-popconfirm
+            title="这是一段内容确定删除吗？"
+          >
+            <el-button slot="reference">删除</el-button>
+          </el-popconfirm>-->
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.size" @pagination="listenPagination" />
+    <!--  更新/新增区域  -->
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+        <el-form-item v-if="dialogStatus == 'update'" label="ID" prop="id" required>
+          <el-input v-model="temp.id" :disabled="true" />
+        </el-form-item>
+        <el-form-item label="会议室名称" prop="roomName" required>
+          <el-input v-model="temp.roomName" maxlength="10" show-word-limit />
+        </el-form-item>
+        <el-form-item label="会议室类型" prop="roomType" required>
+          <el-select v-model="temp.roomType.id" class="filter-item" placeholder="请选择会议室类型">
+            <el-option v-for="item in roomTypes" :key="item.id" :label="item.roomTypeName" :value="item.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="卫生状态" required>
+          <el-switch
+            v-model="temp.cleanStatus"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            width="50"
+          /> {{ temp.cleanStatus ? '整洁' : '待清洁' }}
+        </el-form-item>
+        <el-form-item label="状态" required>
+          <el-switch
+            v-model="temp.status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            width="50"
+          /> {{ temp.status ? '启用' : '禁用' }}
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
+      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
+        <el-table-column prop="key" label="Channel" />
+        <el-table-column prop="pv" label="Pv" />
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { createRoom, fetchPv, updateRoom } from '@/api/conference_room'
+import waves from '@/directive/waves' // waves directive
+import Pagination from '@/components/Pagination'
+import { error, success } from '@/utils/message'
+import { deleteAppointmentsByID, queryAllAppointNums, queryAppointmentsByCondition } from '@/api/appointment'
+import { parseTime } from '@/utils'
+
+export default {
+  name: 'ComplexTable',
+  components: { Pagination },
+  directives: { waves },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
+  data() {
+    return {
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        size: 20,
+        appointmentStatus: undefined
+      },
+      importanceOptions: [1, 2, 3],
+      appointmentStatus: [
+        { 'status': 0, msg: '待审核' },
+        { 'status': 1, msg: '预约成功' },
+        { 'status': 2, msg: '会议进行' },
+        { 'status': 3, msg: '预约完成' }
+      ],
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
+      statusOptions: ['published', 'draft', 'deleted'],
+      showReviewer: false,
+      temp: {
+        id: '',
+        roomName: '',
+        roomType: {
+          id: '',
+          roomTypeName: '',
+          roomArea: 0,
+          roomTypeCapacity: '',
+          roomTypeDesc: '',
+          roomCover: '',
+          roomTypeCreateTime: ''
+        },
+        cleanStatus: '',
+        status: ''
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: '更新',
+        create: '新增'
+      },
+      dialogPvVisible: false,
+      pvData: [],
+      rules: {
+        roomName: [{ required: true, message: '请输入会议室名称', trigger: 'blur' }]
+      },
+      downloadLoading: false
+    }
+  },
+  computed: {
+    classByValue(value) {
+      return (value) => {
+        if (value !== 1) {
+          return { 'color': 'red' }
+        } else {
+          return { 'color': '#13ce66' }
+        }
+      }
+    },
+    classByAppointmentStatus(value) {
+      return (value) => {
+        switch (value) {
+          case 0:
+            return { 'color': '#E6A23C' }
+          case 1:
+            return { 'color': '#67C23A' }
+          case 2:
+            return { 'color': '#F56C6C' }
+          case 3:
+            return { 'color': '#909399' }
+          case 4:
+            return { 'color': '#67C23A' }
+        }
+      }
+    }
+  },
+  created() {
+    this.init()
+  },
+
+  methods: {
+    init() {
+      this.listLoading = true
+      // success('欢迎访问')
+      // queryAllAppointments(this.listQuery).then(response => {
+      queryAppointmentsByCondition(this.listQuery).then(response => {
+        console.log('预约信息: ', response)
+        this.list = response.data.data
+        // this.total = response.data.data.length
+        // console.log('list ', this.list)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1000)
+      })
+
+      queryAllAppointNums().then(response => {
+        this.total = response.data.data
+      })
+
+      /* fetchRoomType().then(response => {
+        this.roomTypes = response.data.data
+      }) */
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.init()
+    },
+    listenPagination(data) {
+      const { page, limit } = data
+      /* console.log('page: ', page)
+      console.log('limit: ', limit) */
+      this.listQuery.page = page
+      this.listQuery.size = limit
+      // 更新数据
+      this.listLoading = true
+      queryAppointmentsByCondition(this.listQuery).then(response => {
+        this.list = response.data.data
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1000)
+      })
+    },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: '操作Success',
+        type: 'success'
+      })
+      row.status = status
+    },
+    sortChange(data) {
+      const { prop, order } = data
+      /* console.log('prop: ', prop)
+      console.log('order: ', order) */
+      if (prop === 'id') {
+        this.sortByID(order)
+      } else if (prop === 'roomArea') {
+        this.sortByArea(order)
+      } else {
+        this.sortByCapacity(order)
+      }
+    },
+    sortByID(order) {
+      this.listQuery.areaSort = ''
+      this.listQuery.capacitySort = ''
+      if (order === 'ascending') {
+        this.listQuery.idSort = true
+      } else if (order === 'descending') {
+        this.listQuery.idSort = false
+      } else {
+        this.listQuery.idSort = true
+      }
+      this.handleFilter()
+    },
+    sortByArea(order) {
+      this.listQuery.idSort = ''
+      this.listQuery.capacitySort = ''
+      if (order === 'ascending') {
+        this.listQuery.areaSort = true
+      } else if (order === 'descending') {
+        this.listQuery.areaSort = false
+      } else {
+        this.listQuery.areaSort = ''
+        this.listQuery.idSort = true
+      }
+      this.handleFilter()
+    },
+    sortByCapacity(order) {
+      this.listQuery.areaSort = ''
+      this.listQuery.idSort = ''
+      if (order === 'ascending') {
+        this.listQuery.capacitySort = true
+      } else if (order === 'descending') {
+        this.listQuery.capacitySort = false
+      } else {
+        this.listQuery.capacitySort = ''
+        this.listQuery.idSort = true
+      }
+      this.handleFilter()
+    },
+    resetTemp() {
+      this.temp = {
+        id: '',
+        roomName: '',
+        roomType: {
+          id: '',
+          roomTypeName: '',
+          roomArea: 0,
+          roomTypeCapacity: '',
+          roomTypeDesc: '',
+          roomCover: '',
+          roomTypeCreateTime: ''
+        },
+        cleanStatus: '',
+        status: ''
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.temp.cleanStatus = true
+      this.temp.status = true
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          this.temp.status = this.temp.status ? 1 : 0
+          this.temp.cleanStatus = this.temp.cleanStatus ? 1 : 0
+          // console.log('新增对象: ', this.temp)
+          createRoom(this.temp).then(() => {
+            success('创建成功')
+            this.list.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.handleRemoveFilters() // 查询所有结果
+            /* this.$notify({
+              title: 'Success',
+              message: 'Created Successfully',
+              type: 'success',
+              duration: 2000
+            }) */
+          })
+        }
+      })
+    },
+    handleUpdate(row) {
+      // console.log('row: ', row)
+      this.temp = Object.assign({}, row) // copy obj
+      // console.log('temp: ', this.temp) 当前行的数据
+      this.temp.cleanStatus = this.temp.cleanStatus === 1
+      this.temp.status = this.temp.status === 1
+      // this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.status = tempData.status ? 1 : 0
+          tempData.cleanStatus = tempData.cleanStatus ? 1 : 0
+          console.log(tempData)
+          // tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateRoom(tempData).then((response) => {
+            console.log('更新结果：', response)
+            const index = this.list.findIndex(v => v.id === this.temp.id)
+            this.list.splice(index, 1, this.temp)
+            this.dialogFormVisible = false
+            success('更新成功')
+            /* this.$notify({
+              title: 'Success',
+              message: '更新成功',
+              type: 'success',
+              duration: 2000
+            }) */
+          }).catch(errorMsg => {
+            error(errorMsg)
+          })
+        }
+      })
+    },
+    handleDelete(row, index) {
+      this.list.splice(index, 1)
+      deleteAppointmentsByID(row.id).then(response => {
+        success('删除成功')
+        this.total -= 1
+      }).catch(msg => {
+        error('删除失败')
+      })
+    },
+    handleFetchPv(pv) {
+      fetchPv(pv).then(response => {
+        this.pvData = response.data.pvData
+        this.dialogPvVisible = true
+      })
+    },
+    handleDownload() { // 导出Excel
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['预约编号', '预约用户', '会议主题', '参会人数', '会议室名称', '会议室类型', '会议室面积(平方米)', '卫生状态', '预约状态', '起始时间', '结束时间']
+        const filterVal = ['id', 'username', 'conferenceSubject', 'participationNums', 'roomName', 'roomTypeName', 'roomArea', 'cleanStatus', 'appointmentStatus', 'appointmentStartTime', 'appointmentEndTime']
+        const data = this.formatJson(filterVal)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: '预约信息'
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal) {
+      return this.list.map(v => filterVal.map(j => {
+        if (j === 'roomTypeName' || j === 'roomArea') {
+          return v['appointmentRoom']['roomType'][j]
+        } else if (j === 'roomName') {
+          return v['appointmentRoom'][j]
+        } else if (j === 'username') {
+          return v['appointmentUser'][j]
+        } else if (j === 'appointmentStartTime' || j === 'appointmentEndTime') {
+          return parseTime(new Date(v[j]), undefined)
+        } else if (j === 'cleanStatus') {
+          return v['appointmentRoom'][j] === 1 ? '整洁' : '待清洁'
+        } else if (j === 'appointmentStatus') {
+          switch (v[j]) {
+            case 0:
+              return '待审核'
+            case 1:
+              return '预约成功'
+            case 2:
+              return '预约失败'
+            case 3:
+              return '会议进行中'
+            case 4:
+              return '预约完成'
+          }
+        } else {
+          return v[j]
+        }
+      }))
+    },
+    handleRemoveFilters() {
+      this.listQuery = {
+        page: 1,
+        size: 20,
+        appointmentStatus: undefined
+      }
+      this.handleFilter()
+    },
+    formatDate(row, column) {
+      // 获取单元格数据
+      const data = row[column.property]
+      if (data == null) {
+        return '未知'
+      }
+      const dt = new Date(data)
+      return parseTime(dt, undefined)
+      // return dt.getFullYear() + '年' + (dt.getMonth() + 1) + '月' + dt.getDate() + '日 ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+    },
+    parseAppointmentStatus(data) {
+      switch (data) {
+        case 0:
+          return '待审核'
+        case 1:
+          return '预约成功'
+        case 2:
+          return '预约失败'
+        case 3:
+          return '会议进行中'
+        case 4:
+          return '预约完成'
+      }
+    }
+  }
+}
+</script>

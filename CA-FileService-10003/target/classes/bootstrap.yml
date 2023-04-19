@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:18848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:18848
+        file-extension: yaml
+        namespace: dev-namespace
+        group: DEFAULT_GROUP
+        extension-configs[0]:
+          data-id: swagger.yaml
+          refresh: true
+  profiles:
+    active: dev
+  application:
+    name: ca-file-service-10003

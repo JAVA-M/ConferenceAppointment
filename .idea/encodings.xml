@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/CA-Api/CA-Api-System/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Api/CA-Api-System/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Auth-10002/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Auth-10002/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-BasicService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-BasicService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-BusinessService-10010/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-BusinessService-10010/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Data/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Data/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-MQ/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-MQ/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Redis/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Security/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Swagger/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/CA-Common-Swagger/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-DataService-10001/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-DataService-10001/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-FileService-10003/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-FileService-10003/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Gateway-10010/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Gateway-10010/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Monitor-10004/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-Monitor-10004/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-WebService-9988/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/CA-WebService-9988/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="CA-Common-Core" />
+        <module name="CA-Monitor-10004" />
+        <module name="CA-Auth-10002" />
+        <module name="CA-Api-System" />
+        <module name="CA-Common-Swagger" />
+        <module name="CA-Common-Security" />
+        <module name="CA-Common-Redis" />
+        <module name="CA-DataService-10001" />
+        <module name="CA-FileService-10003" />
+        <module name="CA-Common-MQ" />
+        <module name="CA-Common-Data" />
+        <module name="CA-Gateway-10010" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="CA-BasicService" target="1.8" />
+      <module name="CA-BusinessService-10010" target="1.8" />
+      <module name="CA-Common-Data (1)" target="1.8" />
+      <module name="CA-WebService-9988" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mxf.mapper.ConferenceRoomStatisticMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mxf.domain.ConferenceRoomStatistic">
+        <id column="conference_room_id" property="conferenceRoomId" />
+        <result column="appointment_count" property="appointmentCount" />
+        <result column="user_count" property="userCount" />
+        <result column="average_score" property="averageScore" />
+        <result column="room_area" property="roomArea" />
+        <result column="equipment_normal_rate" property="equipmentNormalRate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        conference_room_id, appointment_count, user_count, average_score, room_area, equipment_normal_rate
+    </sql>
+<!--
+SELECT
+	r.id conference_room_id,
+	t.room_area
+FROM
+	conference_room r
+	LEFT JOIN conference_room_type t ON r.room_type_id = t.id
+
+insert into conference_room_statistic(conference_room_id, average_score, room_area, equipment_normal_rate )
+		SELECT
+		r.id conference_room_id,
+		5,
+		t.room_area ,
+		100
+	FROM
+		conference_room r
+		LEFT JOIN conference_room_type t ON r.room_type_id = t.id
+
+
+select appointment_room_id,sum(participation_nums) count from appointment_info GROUP BY appointment_room_id
+
+UPDATE conference_room_statistic AS s
+INNER JOIN (
+	select appointment_room_id,sum(participation_nums) count from appointment_info GROUP BY appointment_room_id
+) as c
+on s.conference_room_id = c.appointment_room_id
+
+set s.user_count = c.count
+-->
+</mapper>

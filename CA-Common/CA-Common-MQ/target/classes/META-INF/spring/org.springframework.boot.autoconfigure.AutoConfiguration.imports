@@ -1,0 +1,2 @@
+com.mxf.common.rabbitmq.service.MqProducerService
+com.mxf.common.rabbitmq.service.MqConsumerService

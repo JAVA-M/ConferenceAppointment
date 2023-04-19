@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15432407",
+      "name": "上午",
+      "font_class": "shangwu",
+      "unicode": "e69b",
+      "unicode_decimal": 59035
+    }
+  ]
+}
