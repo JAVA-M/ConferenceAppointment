@@ -23,7 +23,7 @@
         <result column="appointment_end_time" property="appointmentEndTime" />
         <result column="appointment_create_time" property="appointmentCreateTime" />
         <result column="appointment_status" property="appointmentStatus" />
-        <association column="appointment_user_id" property="appointmentUser" select="user" javaType="com.mxf.domain.AdminUser"/>
+        <association column="appointment_user_id" property="appointmentUser" select="user" javaType="com.mxf.domain.User"/>
         <association column="appointment_room_id" property="appointmentRoom" select="room" javaType="com.mxf.domain.vo.ConferenceRoomVo"/>
     </resultMap>
     <!-- 给用户查询的信息 -->
@@ -137,11 +137,11 @@
             id = #{id}
     </select>
 
-    <select id="user" resultType="com.mxf.domain.AdminUser">
+    <select id="user" resultType="com.mxf.domain.User">
         select
             *
         from
-            admin_user
+            user
         where
             id = #{appointment_user_id}
     </select>

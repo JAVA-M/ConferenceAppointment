@@ -109,6 +109,12 @@
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
 
+        <!--<dependency>
+            <groupId>com.mxf</groupId>
+            <artifactId>CA-Common-Email</artifactId>
+            <version>${version}</version>
+        </dependency>-->
+
     </dependencies>
 
 </project>

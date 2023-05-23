@@ -23,5 +23,6 @@
         <module>CA-Common-Security</module>
         <module>CA-Common-Swagger</module>
         <module>CA-Common-MQ</module>
+        <module>CA-Common-Email</module>
     </modules>
 </project>

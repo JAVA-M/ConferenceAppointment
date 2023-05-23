@@ -110,7 +110,7 @@
                 </svg>
 
               </div>
-              <div class="item" :title="userInfo.role == 1 ? '管理员' : '普通用户'">
+              <div class="item" :title="userInfo.role.roleDesc">
                 <svg
                   t="1677555911844"
                   class="icon my_icon"
@@ -861,6 +861,15 @@ export default {
         downloadElement.click() // 点击下载
         document.body.removeChild(downloadElement) // 下载完成移除元素
       })
+    },
+    parseRoleName(role) {
+      console.log('role', role)
+      switch(role) {
+        case 1 : return '超级管理员'
+        case 2 : return '普通管理员'
+        case 3 : return '普通用户'
+        default: return '未知'
+      }
     }
   }
 }

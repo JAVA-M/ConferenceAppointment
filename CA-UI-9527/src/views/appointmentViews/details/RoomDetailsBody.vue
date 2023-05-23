@@ -71,6 +71,7 @@
               <el-image
                 style="height: 200px"
                 :src="conferenceRoom.roomType.roomCover"
+                :preview-src-list="conferenceRoom.roomType.roomCover"
               >
               </el-image>
             </el-col>
@@ -380,7 +381,8 @@ export default {
       totalUsers: undefined,
       maxCapacity: 30,
       charts: {},
-      chartData: []
+      chartData: [],
+      imageList: []
     }
   },
   computed: {
@@ -430,6 +432,7 @@ export default {
         this.conferenceRoom = response.data.data
         this.form.appointmentRoomId = this.conferenceRoom.id
         this.form.roomName = this.conferenceRoom.roomName + '-' + this.conferenceRoom.roomType.roomTypeName
+        this.imageList[0] = this.conferenceRoom.roomType.roomCover
       })
       queryAppointMax().then(response => {
         // console.log(response)

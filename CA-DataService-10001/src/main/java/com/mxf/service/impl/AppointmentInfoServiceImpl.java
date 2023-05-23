@@ -162,7 +162,7 @@ public class AppointmentInfoServiceImpl extends ServiceImpl<AppointmentInfoMappe
     public Boolean createAppointment(AppointmentInfo appointmentInfo, HttpServletRequest request) {
         String token = request.getHeader("token");
         DecodedJWT verify = JWTUtils.verify(token);
-
+        //
         // logger.info("预约用户的ID: " + verify.getClaim("id").asString());
         appointmentInfo.setAppointmentUserId(Integer.parseInt(verify.getClaim("id").asString()));
         return createAppointment(appointmentInfo);

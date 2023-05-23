@@ -18,6 +18,18 @@ spring:
         extension-configs[0]:
           data-id: redis.yaml
           refresh: true
+#        extension-configs[1]:
+#          data-id: email.yaml
+#          refresh: true
+  mail:
+    username: mxf2023@qq.com
+    password: jopxgptnorehdijh
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
 #    gateway:
 #      routes: # 路由规则的配置
 #        - id: ca-data-service-10001

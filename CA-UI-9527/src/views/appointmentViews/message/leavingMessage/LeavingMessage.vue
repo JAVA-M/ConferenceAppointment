@@ -82,8 +82,8 @@
           show-size-changer
           :default-current="1"
           :page-size.sync="pagination.pageSize"
-          :total="total"
-          :show-total="(total, range) => `${range[0]}-${range[1]} 共 ${total} 条`"
+          :total="messageTotal"
+          :show-total="(total, range) => `${range[0]}-${range[1]} 共 ${messageTotal} 条`"
           @change="onChange"
           @showSizeChange="onShowSizeChange"
         />
@@ -144,7 +144,7 @@ export default {
       this.preTimeStamp = moment().toDate().getTime()
       this.refreshLeaveMessage()
       queryLeaveMessageSize().then(response => {
-        console.log(response.data)
+        console.log('留言条数', response.data)
         this.messageTotal = response.data.data
       })
       queryVisitorInfo().then(response => {
@@ -164,6 +164,7 @@ export default {
       return filterObj(param)
     },
     submitLeavingMessage() {
+      console.log('留言信息', this.leavingMessage)
       if (this.leavingMessage.nickname === null || this.leavingMessage.nickname.length === 0 || this.leavingMessage.nickname.trim().length === 0) {
         this.$message.error('请输入昵称！')
       } else if (!new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(this.leavingMessage.email)) {
@@ -174,12 +175,13 @@ export default {
         warning('评论过于频繁，两次评论要间隔30S，请稍后在评论')
       } else {
         success('留言成功!')
-        // console.log(this.leavingMessage)
+        console.log('留言信息', this.leavingMessage)
         this.leavingMessage.createTime = new Date()
-        insertLeaveMessage(this.leavingMessage)
+        insertLeaveMessage(this.leavingMessage).then(() => {
+          this.leavingMessage.message = ''
+        })
         this.preTimeStamp = moment().toDate().getTime()
         this.refreshLeaveMessage()
-        this.leavingMessage.message = ''
       }
     },
     refreshLeaveMessage() {

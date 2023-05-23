@@ -18,6 +18,10 @@ spring:
         extension-configs[0]:
           data-id: redis.yaml
           refresh: true
+#        extension-configs[1]:
+#          data-id: email.yaml
+#          refresh: true
+
 #    gateway:
 #      routes: # 路由规则的配置
 #        - id: ca-data-service-10001

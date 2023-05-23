@@ -99,7 +99,6 @@
 import WebHeader from '@/views/appointmentViews/header/WebHeader'
 import WebContainer from '@/views/appointmentViews/container/WebContainer'
 import { warning, success, error } from '@/utils/message'
-import WebLogin from '@/views/appointmentViews/details/WebLogin'
 import { createUser, login, queryNameIsRepeat, refreshVerifyCode } from '@/api/user'
 import { setToken } from '@/utils/auth'
 export default {
@@ -107,8 +106,7 @@ export default {
   inject: ['reload'],
   components: {
     WebHeader,
-    WebContainer,
-    WebLogin
+    WebContainer
   },
   data() {
     const validateName = (rule, value, callback) => {

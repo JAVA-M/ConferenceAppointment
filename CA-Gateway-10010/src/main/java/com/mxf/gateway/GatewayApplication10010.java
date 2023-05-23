@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author manxingfu
  * @date 2023/2/17
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class }, scanBasePackages = "com.mxf")
 public class GatewayApplication10010 {
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication10010.class, args);
