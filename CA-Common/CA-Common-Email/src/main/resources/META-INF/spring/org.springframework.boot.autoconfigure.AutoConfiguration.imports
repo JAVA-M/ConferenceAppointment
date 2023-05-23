@@ -1,0 +1,2 @@
+com.mxf.common.email.service.EmailService
+com.mxf.common.email.service.impl.EmailServiceImpl

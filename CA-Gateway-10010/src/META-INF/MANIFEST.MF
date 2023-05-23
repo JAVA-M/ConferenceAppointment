@@ -1,0 +1,83 @@
+Manifest-Version: 1.0
+Main-Class: com.mxf.gateway.GatewayApplication10010
+Class-Path: bcprov-jdk15on-1.69.jar springfox-spi-3.0.0.jar spring-boot-
+ actuator-autoconfigure-2.6.13.jar rxjava-3.0.12.jar sentinel-cluster-cl
+ ient-default-1.8.5.jar spring-cloud-alibaba-sentinel-gateway-2021.0.4.0
+ .jar spring-boot-starter-webflux-2.6.13.jar commons-collections4-4.4.ja
+ r sentinel-api-gateway-adapter-common-1.8.5.jar LatencyUtils-2.0.3.jar 
+ spring-aop-5.3.23.jar httpcore-4.4.15.jar commons-math3-3.6.1.jar netty
+ -handler-proxy-4.1.84.Final.jar spring-boot-starter-mail-2.6.13.jar spr
+ ing-cloud-gateway-server-3.1.4.jar spring-boot-starter-data-redis-react
+ ive-2.6.13.jar sentinel-cluster-server-default-1.8.5.jar jna-4.5.2.jar 
+ springfox-spring-webflux-3.0.0.jar logback-classic-1.2.11.jar jackson-d
+ ataformat-yaml-2.13.4.jar jakarta.activation-1.2.2.jar spring-boot-actu
+ ator-2.6.13.jar sentinel-core-1.8.5.jar spring-boot-starter-logging-2.6
+ .13.jar javax.servlet-api-4.0.1.jar netty-common-4.1.84.Final.jar nacos
+ -client-2.1.1.jar netty-codec-4.1.84.Final.jar httpclient-4.5.13.jar xm
+ lbeans-3.1.0.jar simpleclient_tracer_otel-0.12.0.jar spring-oxm-5.3.23.
+ jar swagger-annotations-1.6.2.jar spring-cloud-loadbalancer-3.1.5.jar n
+ etty-buffer-4.1.84.Final.jar mapstruct-1.3.1.Final.jar error_prone_anno
+ tations-2.10.0.jar netty-resolver-dns-native-macos-4.1.84.Final-osx-x86
+ _64.jar junit-4.13.2.jar spring-boot-2.6.13.jar netty-transport-native-
+ epoll-4.1.84.Final-linux-x86_64.jar log4j-api-2.17.2.jar netty-transpor
+ t-classes-epoll-4.1.84.Final.jar log4j-to-slf4j-2.17.2.jar spring-plugi
+ n-core-2.0.0.RELEASE.jar spring-core-5.3.23.jar simpleclient_tracer_com
+ mon-0.12.0.jar sentinel-parameter-flow-control-1.8.5.jar spring-context
+ -support-5.3.23.jar springfox-spring-webmvc-3.0.0.jar netty-handler-4.1
+ .84.Final.jar redisson-spring-boot-starter-3.16.2.jar commons-compress-
+ 1.19.jar spring-boot-starter-validation-2.6.13.jar spring-expression-5.
+ 3.23.jar reactor-netty-core-1.0.24.jar spring-security-rsa-1.0.11.RELEA
+ SE.jar jakarta.validation-api-2.0.2.jar aspectjweaver-1.9.7.jar hamcres
+ t-2.2.jar spring-boot-devtools-2.6.13.jar reactive-streams-1.0.4.jar sp
+ ring-boot-starter-data-redis-2.6.13.jar redisson-spring-data-25-3.16.2.
+ jar commons-io-2.2.jar spring-webflux-5.3.23.jar poi-ooxml-schemas-4.1.
+ 2.jar bcpkix-jdk15on-1.69.jar spring-cloud-starter-alibaba-sentinel-202
+ 1.0.4.0.jar spring-tx-5.3.23.jar jakarta.mail-1.6.7.jar caffeine-2.9.3.
+ jar springfox-swagger2-3.0.0.jar httpcore-nio-4.4.15.jar jackson-dataty
+ pe-jsr310-2.13.4.jar jboss-logging-3.4.3.Final.jar spring-boot-starter-
+ actuator-2.6.13.jar spring-cloud-starter-alibaba-nacos-discovery-2021.0
+ .4.0.jar jakarta.annotation-api-1.3.5.jar spring-boot-starter-json-2.6.
+ 13.jar netty-transport-native-unix-common-4.1.84.Final.jar byte-buddy-1
+ .11.22.jar springfox-swagger-common-3.0.0.jar logback-core-1.2.11.jar r
+ eactor-netty-http-1.0.24.jar jboss-marshalling-river-2.0.11.Final.jar s
+ pring-boot-autoconfigure-2.6.13.jar jackson-databind-2.13.4.2.jar nacos
+ -encryption-plugin-2.1.1.jar bcutil-jdk15on-1.69.jar sentinel-cluster-c
+ ommon-default-1.8.5.jar sentinel-transport-simple-http-1.8.5.jar spring
+ -data-commons-2.6.9.jar SparseBitSet-1.2.jar sentinel-spring-webmvc-ada
+ pter-1.8.5.jar spring-web-5.3.23.jar netty-transport-4.1.84.Final.jar j
+ boss-marshalling-2.0.11.Final.jar lettuce-core-6.1.10.RELEASE.jar HdrHi
+ stogram-2.1.12.jar spring-data-redis-2.6.9.jar poi-4.1.2.jar snakeyaml-
+ 1.29.jar spring-boot-starter-reactor-netty-2.6.13.jar jul-to-slf4j-1.7.
+ 36.jar jackson-core-2.13.4.jar oshi-core-3.9.1.jar springfox-spring-web
+ -3.0.0.jar poi-ooxml-4.1.2.jar springfox-core-3.0.0.jar hutool-all-5.8.
+ 2.jar fastjson2-2.0.20.jar jackson-annotations-2.13.4.jar springfox-swa
+ gger-ui-3.0.0.jar jackson-datatype-jdk8-2.13.4.jar spring-jcl-5.3.23.ja
+ r classmate-1.5.1.jar spring-cloud-starter-gateway-3.1.4.jar spring-clo
+ ud-starter-3.1.5.jar netty-resolver-4.1.84.Final.jar reactor-extra-3.4.
+ 8.jar netty-codec-dns-4.1.84.Final.jar cache-api-1.1.1.jar spring-beans
+ -5.3.23.jar reactor-core-3.4.24.jar springfox-schema-3.0.0.jar curvesap
+ i-1.06.jar simpleclient-0.12.0.jar sentinel-spring-webflux-adapter-1.8.
+ 5.jar spring-cloud-context-3.1.5.jar spring-context-support-1.0.11.jar 
+ sentinel-datasource-nacos-1.8.5.jar netty-resolver-dns-classes-macos-4.
+ 1.84.Final.jar hamcrest-core-2.2.jar nacos-auth-plugin-2.1.1.jar common
+ s-codec-1.15.jar spring-data-keyvalue-2.6.9.jar micrometer-core-1.8.11.
+ jar jna-platform-4.5.2.jar spring-boot-starter-2.6.13.jar concurrentlin
+ kedhashmap-lru-1.4.2.jar netty-resolver-dns-4.1.84.Final.jar commons-fi
+ leupload-1.4.jar spring-plugin-metadata-2.0.0.RELEASE.jar netty-codec-h
+ ttp-4.1.84.Final.jar fastjson-1.2.83_noneautotype.jar swagger-annotatio
+ ns-2.1.2.jar hibernate-validator-6.2.5.Final.jar spring-cloud-circuitbr
+ eaker-sentinel-2021.0.4.0.jar spring-cloud-alibaba-sentinel-datasource-
+ 2021.0.4.0.jar spring-cloud-alibaba-commons-2021.0.4.0.jar httpasynccli
+ ent-4.1.5.jar slf4j-api-1.7.36.jar simpleclient_tracer_otel_agent-0.12.
+ 0.jar swagger-models-1.6.2.jar jackson-module-parameter-names-2.13.4.ja
+ r spring-cloud-starter-bootstrap-3.1.5.jar commons-lang3-3.12.0.jar spr
+ ing-security-crypto-5.6.8.jar checker-qual-3.19.0.jar classgraph-4.8.83
+ .jar sentinel-transport-common-1.8.5.jar java-jwt-4.2.1.jar sentinel-an
+ notation-aspectj-1.8.5.jar sentinel-datasource-extension-1.8.5.jar nett
+ y-codec-socks-4.1.84.Final.jar sentinel-reactor-adapter-1.8.5.jar sprin
+ g-cloud-starter-alibaba-nacos-config-2021.0.4.0.jar spring-context-5.3.
+ 23.jar spring-cloud-commons-3.1.5.jar jodd-bean-5.1.6.jar lombok-1.18.2
+ 2.jar sentinel-spring-cloud-gateway-adapter-1.8.5.jar tomcat-embed-el-9
+ .0.68.jar redisson-3.16.2.jar jodd-core-5.1.6.jar netty-codec-http2-4.1
+ .84.Final.jar
+
