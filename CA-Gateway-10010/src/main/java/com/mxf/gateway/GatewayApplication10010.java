@@ -13,7 +13,7 @@ public class GatewayApplication10010 {
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication10010.class, args);
         System.out.println(
-                "(♥◠‿◠)ﾉﾞ网关服务模块启动成功!ლ(´ڡ`ლ)ﾞ\n" +
+                 "(♥◠‿◠)ﾉﾞ网关服务模块启动成功!ლ(´ڡ`ლ)ﾞ\n" +
                         "  ,ad8888ba,          db         \n" +
                         " d8\"'    `\"8b        d88b        \n" +
                         "d8'                 d8'`8b       \n" +
