@@ -68,6 +68,13 @@
             <svg-icon icon-class="articleAboutMe" />
             留 言
           </router-link>
+          <router-link
+            to="/chat"
+            :class="key() === '/chat' ? 'item active' : 'item'"
+          >
+            <svg-icon icon-class="friendLinks" />
+            聊 天
+          </router-link>
         </nav>
         <div class="joe_header__above-search">
           <input

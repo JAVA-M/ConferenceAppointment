@@ -637,7 +637,7 @@
 
 <script>
 
-import { getAction, getFileAccessHttpUrl } from '@/api/manage'
+import { getFileAccessHttpUrl } from '@/api/manage'
 import { getInfo } from '@/api/user'
 import {
   deleteAppointmentsByID, exportInfoExcel,

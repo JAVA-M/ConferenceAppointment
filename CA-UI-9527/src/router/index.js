@@ -94,6 +94,14 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'leavingMessage' }
       },
+      /* 聊天室 */
+      {
+        path: '/chat',
+        name: 'chat',
+        component: () => import('@/views/appointmentViews/chat/index.vue'),
+        hidden: true,
+        meta: { title: 'ChatRoom' }
+      },
       {
         path: '/evaluate',
         name: 'evaluate',

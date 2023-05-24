@@ -33,7 +33,9 @@ export default {
       if (path === '/articleArchive' ||
         path === '/userHome' ||
         path === '/leavingMessage' ||
+        path === '/chat' ||
         path.indexOf('/userHome/') !== -1 ||
+        path.indexOf('/chat/') !== -1 ||
         path.indexOf('/leavingMessage/') !== -1 ||
         path.indexOf('/roomDetails/') !== -1) {
         return false

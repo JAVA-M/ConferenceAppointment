@@ -16,6 +16,7 @@
         <module>CA-Auth-10002</module>
         <module>CA-FileService-10003</module>
         <module>CA-Monitor-10004</module>
+        <module>CA-ChatService-10005</module>
     </modules>
 
     <properties>

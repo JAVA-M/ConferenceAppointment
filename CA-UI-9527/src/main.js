@@ -31,9 +31,8 @@ import 'ant-design-vue/dist/antd.less'
 // import 'viewerjs/dist/viewer.css' // 引入css
 // Vue.use(Viewer) // 默认配置写法
 
-
-import VueViewer, { directive as viewerDirective } from 'v-viewer';
-import 'viewerjs/dist/viewer.css'; // 图片预览器的样式
+import VueViewer, { directive as viewerDirective } from 'v-viewer'
+import 'viewerjs/dist/viewer.css' // 图片预览器的样式
 Vue.use(VueViewer, {
   defaultOptions: {
     /**
@@ -86,7 +85,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
+  size: Cookies.get('size') || 'medium' // set element-ui default size
   /* locale: enLang // 如果使用中文，无需设置，请删除 */
 })
 

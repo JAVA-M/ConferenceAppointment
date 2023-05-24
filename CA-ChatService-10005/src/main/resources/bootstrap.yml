@@ -1,0 +1,23 @@
+server:
+  port: 10005
+spring:
+  application:
+    name: ca-chat-service-10005
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:18848
+        password: nacos
+        username: nacos
+      config:
+        server-addr: 127.0.0.1:18848
+        file-extension: yaml
+        namespace: dev-namespace
+#        extension-configs[0]:
+#          data-id: redis.yaml
+#          refresh: true
+#        extension-configs[1]:
+#          data-id: email.yaml
+#          refresh: true
