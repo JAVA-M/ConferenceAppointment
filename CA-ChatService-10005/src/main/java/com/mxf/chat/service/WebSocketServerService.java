@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2023/5/24 12:14
  * @desc
  */
-@ServerEndpoint(value = "/websocket", configurator = CustomConfigurator.class)
+@ServerEndpoint(value = "/websocket") // , configurator = CustomConfigurator.class
 @Service
 public class WebSocketServerService {
 
@@ -30,27 +30,32 @@ public class WebSocketServerService {
 
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static Map<String, Session> sessions = new ConcurrentHashMap<>();
+    private final ChatMessage message = new ChatMessage("001", "欢迎加入聊天室，请自觉遵守聊天室规则，违者将面临封号处理", "0", "系统", new Date());
+
+    private static final Map<String, Session> sessions = new ConcurrentHashMap<>();
     @OnOpen
-    public void onOpen(Session session, EndpointConfig config) throws IOException {
-       logger.info("{} -> 连接成功", session.getId());
-        sessions.put((String) config.getUserProperties().get("userId"), session);
-        ChatMessage message = new ChatMessage("101", "欢迎加入聊天室，请自觉遵守聊天室规则，违者将面临封号处理", "管理员", new Date());
+    public void onOpen(Session session) throws IOException {
+        String userId = getUserId(session);
+        sessions.put(userId, session);
+        logger.info("用户-[{}] -> 连接成功, 目前共[{}]位用户在线", userId, sessions.size());
+        message.setCreateTime(new Date());
         session.getBasicRemote().sendText(JSONObject.toJSONString(message));
     }
 
     @OnClose
-    public void onClose(EndpointConfig config) {
-        logger.info("{} -> 断开连接", (String) config.getUserProperties().get("userId"));
-        sessions.remove((String) config.getUserProperties().get("userId"));
+    public void onClose(Session session) {
+        String userId = getUserId(session);
+        sessions.remove(userId);
+
+        logger.info("用户-[{}] -> 断开连接, 目前共[{}]位用户在线", userId, sessions.size());
     }
 
     @OnMessage
-    public void onMessage(String jsonMessage, EndpointConfig config) {
+    public void onMessage(String jsonMessage,Session session) {
         // logger.info("前端传来的String: {}", jsonMessage);
         ChatMessage message = JSONObject.parseObject(jsonMessage, ChatMessage.class);
         logger.info("[{}] {} 发送了一条消息:{}",simpleDateFormat.format(message.getCreateTime()), message.getUsername(), message.getContent());
-        Session recover = sessions.get((String) config.getUserProperties().get("userId"));
+        /*Session recover = sessions.get(getUserId(session));
 
         message.setUsername("管理员");
         message.setCreateTime(new Date());
@@ -60,6 +65,20 @@ public class WebSocketServerService {
             recover.getBasicRemote().sendText(JSONObject.toJSONString(message));
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }*/
+        message.setUserId(getUserId(session));
+        for (String id : sessions.keySet()) {
+            if (id.equals(getUserId(session))) continue;
+            try {
+                sessions.get(id).getBasicRemote().sendText(jsonMessage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+
+    public String getUserId(Session session) {
+        return session.getRequestParameterMap().get("userId").get(0);
+    }
+
 }

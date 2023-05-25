@@ -15,14 +15,16 @@ public class ChatMessage {
     // 聊天内容
     private String content;
     // 发送人
+    private String userId;
     private String username;
 
     // 发送时间
     private Date createTime;
 
-    public ChatMessage(String messageId, String content, String username, Date createTime) {
+    public ChatMessage(String messageId, String content, String userId, String username, Date createTime) {
         this.messageId = messageId;
         this.content = content;
+        this.userId = userId;
         this.username = username;
         this.createTime = createTime;
     }
@@ -44,6 +46,14 @@ public class ChatMessage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

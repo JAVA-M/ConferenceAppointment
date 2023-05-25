@@ -17,7 +17,7 @@ import java.util.Date;
 @RestController
 public class WebSocketController extends BaseController {
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
     public ChatMessage handleMessage(ChatMessage message) {
