@@ -110,10 +110,13 @@ export default {
     }
     this.ws.onmessage = (e) => {
       // console.log('收到的消息', JSON.parse(e.data))
+      this.messages = JSON.parse(localStorage.getItem('messages'))
       this.messages.push(JSON.parse(e.data))
       // console.log('消息队列', this.messages)
     }
     this.ws.onclose = (e) => {
+      // 将聊天记录保存到localstorage
+      localStorage.setItem('messages', JSON.stringify(this.messages))
       warning('断开连接')
     }
     this.ws.onerror = (e) => {
@@ -199,16 +202,15 @@ img{
       }
     }
   }
-
+  .chat-content img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
   .word-my{
     display: flex;
     justify-content:flex-end;
     margin-bottom: 20px;
-    img{
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
     .info{
       width: 90%;
       margin-left: 10px;

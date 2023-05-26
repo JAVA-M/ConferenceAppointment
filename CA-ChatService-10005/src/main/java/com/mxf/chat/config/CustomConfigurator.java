@@ -16,6 +16,7 @@ public class CustomConfigurator extends ServerEndpointConfig.Configurator {
         // String clientId = request.getHeaders().get("X-User-Id").get(0);
         String clientId = request.getParameterMap().get("userId").get(0);
         // 将连接头信息存储到ServerEndpointConfig中
+
         sec.getUserProperties().put("userId", clientId);
         super.modifyHandshake(sec, request, response);
     }
